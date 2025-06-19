@@ -62,14 +62,25 @@ It includes user authentication, posts, likes, comments, follow/unfollow functio
 ## Project Structure
 
 space-app/
-├── controllers/ # Route handlers
-├── services/ # Business logic
-├── routes/ # Express route definitions
-├── models/ # Mongoose models
-├── middlewares/ # Auth, file upload, error handlers
-├── validators/ # Request validation logic
-├── docs/ # Swagger YAML files
-├── utils/ # Helper functions (e.g., JWT, email)
-├── uploads/ # Uploaded profile images
-├── app.js # Express app
-└── server.js # App startup
+
+├── controllers/ # Route handlers (auth, posts, users, etc.)
+
+├── services/ # Business logic separated from controllers
+
+├── routes/ # Express route definitions grouped by feature
+
+├── models/ # Mongoose schemas and models
+
+├── middlewares/ # Authentication, file uploads, validation, etc.
+
+├── validators/ # Request validation using express-validator
+
+├── docs/ # Swagger YAML files for API documentation
+
+├── utils/ # Utility functions (JWT generation, email sender, etc.)
+
+├── uploads/ # Uploaded profile images (served statically)
+
+├── app.js # Express application setup
+
+└── server.js # Server initialization and startup
