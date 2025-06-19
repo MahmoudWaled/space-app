@@ -13,18 +13,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-
+app.use('/Uploads', express.static(path.join(__dirname, '/Uploads')));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api/posts',postRoutes);
-app.use('/uploads',express.static(path.join(__dirname,'../Uploads')));
 app.use('/api/comments', commentRoutes);
 app.use('/api/notifications', notificationRoutes);
-
 app.get('/',(req,res)=>{
     res.send("hello")
 })
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route Not Found' });
+});
+
 
 module.exports = app ;
