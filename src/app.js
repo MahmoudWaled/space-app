@@ -8,6 +8,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const path = require('path');
 const notificationRoutes = require('./routes/notificationRoutes');
 const app = express();
+const { swaggerUi, swaggerSpec } = require('./swagger');
 
 
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/api/notifications', notificationRoutes);
 app.get('/',(req,res)=>{
     res.send("hello")
 })
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use((req, res) => {
   res.status(404).json({ message: 'Route Not Found' });
 });

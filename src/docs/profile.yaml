@@ -1,0 +1,27 @@
+tags:
+  - name: Profile
+    description: APIs related to user profile
+
+paths:
+  /api/user/{id}:
+    get:
+      summary: Get user profile by ID
+      tags: [Profile]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        200:
+          description: User profile
+        400:
+          description: Invalid user ID
+        404:
+          description: User not found
+
+   

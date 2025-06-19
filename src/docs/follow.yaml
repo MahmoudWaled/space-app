@@ -1,0 +1,42 @@
+tags:
+  - name: Follow/Unfollow
+    description: APIs related to following/unfollowing users
+
+paths:
+  /api/user/follow/{id}:
+    patch:
+      summary: Follow a user
+      tags: [Follow/Unfollow]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Target user ID
+      responses:
+        200:
+          description: Followed user successfully
+        400:
+          description: Invalid user ID or already followed
+
+  /api/user/unfollow/{id}:
+    patch:
+      summary: Unfollow a user
+      tags: [Follow/Unfollow]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Target user ID
+      responses:
+        200:
+          description: Unfollowed user successfully
+        400:
+          description: Invalid user ID or not followed

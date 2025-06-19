@@ -1,0 +1,49 @@
+tags:
+  - name: Notifications
+    description: APIs related to user notifications
+
+paths:
+  /api/notifications:
+    get:
+      summary: Get all notifications for the logged-in user
+      tags: [Notifications]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of notifications
+        401:
+          description: Unauthorized
+
+  /api/notifications/{id}/mark-read:
+    patch:
+      summary: Mark a notification as read
+      tags: [Notifications]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Notification ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification marked as read
+        401:
+          description: Unauthorized
+        404:
+          description: Notification not found
+
+  /api/notifications/mark-all-read:
+    patch:
+      summary: Mark all notifications as read
+      tags: [Notifications]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: All notifications marked as read
+        401:
+          description: Unauthorized

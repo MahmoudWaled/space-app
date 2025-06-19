@@ -1,0 +1,87 @@
+tags:
+  - name: Comments
+    description: APIs related to comments on posts
+
+paths:
+  /api/comments:
+    post:
+      summary: Add a new comment to a post
+      tags: [Comments]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - postId
+                - content
+              properties:
+                postId:
+                  type: string
+                  example: "6654a14eaf730f300167e3e8"
+                content:
+                  type: string
+                  example: "This is a great post!"
+      responses:
+        201:
+          description: Comment created
+        400:
+          description: Bad request
+
+  /api/comments/{id}:
+    put:
+      summary: Update a comment
+      tags: [Comments]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Comment ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: string
+                  example: "Updated comment content"
+      responses:
+        200:
+          description: Comment updated
+        400:
+          description: Invalid ID
+        403:
+          description: Unauthorized
+        404:
+          description: Comment not found
+
+    delete:
+      summary: Delete a comment
+      tags: [Comments]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Comment ID
+      responses:
+        200:
+          description: Comment deleted
+        403:
+          description: Unauthorized
+        404:
+          description: Comment not found

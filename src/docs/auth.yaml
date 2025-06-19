@@ -1,0 +1,117 @@
+tags:
+  - name: Auth
+    description: Authentication APIs
+
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+                - confirmPassword
+              properties:
+                username:
+                  type: string
+                  example: mahmoud
+                email:
+                  type: string
+                  example: mahmoud@gmail.com
+                password:
+                  type: string
+                  example: "123456$PaSSword"
+                confirmPassword:
+                  type: string
+                  example: "123456$PaSSword"
+                profileImage:
+                  type: string
+                  format: binary
+      responses:
+        201:
+          description: User created successfully
+        400:
+          description: Bad request
+
+  /api/auth/login:
+    post:
+      summary: Login a user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: example@gmail.com
+                password:
+                  type: string
+                  example: "123456"
+      responses:
+        200:
+          description: Logged in successfully
+        401:
+          description: Invalid email or password
+
+  /api/auth/forgot-password:
+    post:
+      summary: Send reset password link
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  example: example@gmail.com
+      responses:
+        200:
+          description: Reset link sent
+        400:
+          description: User not found
+
+  /api/auth/reset-password/{token}:
+    post:
+      summary: Reset user password with token
+      tags: [Auth]
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  example: "newPassword123$"
+      responses:
+        200:
+          description: Password reset successful
+        400:
+          description: Invalid or expired token

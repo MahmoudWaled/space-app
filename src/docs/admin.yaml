@@ -1,0 +1,72 @@
+tags:
+  - name: Admin
+    description: Admin-only operations for managing users and posts
+
+paths:
+  /api/admin/users:
+    get:
+      summary: Get all users (admin only)
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of all users
+        403:
+          description: Forbidden - Not an admin
+        401:
+          description: Unauthorized
+
+  /api/admin/users/{id}:
+    delete:
+      summary: Delete a user by ID (admin only)
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        200:
+          description: User deleted successfully
+        403:
+          description: Forbidden - Not allowed
+        404:
+          description: User not found
+
+  /api/admin/posts:
+    get:
+      summary: Get all posts (admin only)
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of all posts
+        403:
+          description: Forbidden - Not an admin
+
+  /api/admin/posts/{id}:
+    delete:
+      summary: Delete a post by ID (admin only)
+      tags: [Admin]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Post ID
+      responses:
+        200:
+          description: Post deleted successfully
+        403:
+          description: Forbidden - Not allowed
+        404:
+          description: Post not found
