@@ -14,7 +14,7 @@ exports.registerUser = async (data, file) => {
   if (existingEmail) throw new Error("email is already used!");
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const profileImage = file ? file.path : undefined;
+  const profileImage = file ? `${file.filename}` : null;
 
   const user = await User.create({
     username,
