@@ -6,6 +6,11 @@ exports.registerValidation = [
     .withMessage("Username  is required")
     .isLength({ min: 3 })
     .withMessage("Username must be at least 3 characters"),
+    body("name")
+    .notEmpty()
+    .withMessage("name is required")
+    .isLength({ min: 3 })
+    .withMessage("name must be at least 3 characters"),
   body("email")
     .notEmpty()
     .withMessage("Email is required")

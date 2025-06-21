@@ -5,7 +5,7 @@ const Notification = require("../models/Notification");
 
 exports.createPost = async (data, file, userId) => {
   const { content } = data;
-  const image = file ? `/Uploads/${file.filename}` : null;
+  const image = file ? `${file.filename}` : null;
 
   const post = await Post.create({
     content,
@@ -18,7 +18,7 @@ exports.createPost = async (data, file, userId) => {
 
 exports.getAllPosts = async () => {
   return await Post.find()
-    .populate("author", "username")
+    .populate("author", "username profileImage name ",)
     .populate("likes", "username")
     .populate({
       path: "comments",

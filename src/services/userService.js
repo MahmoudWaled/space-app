@@ -37,6 +37,18 @@ exports.deleteUserById = async (userId) => {
   return `user ${user.username} deleted successfully`;
 };
 
+exports.updateUser = async (userId, updates) => {
+  if (!mongoose.Types.ObjectId.isValid(userId))
+    throw new Error("invalid user id");
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { $set: updates },
+    { new: true, runValidators: true }
+  ).select("-__v");
+
+  return updatedUser;
+};
+
 exports.followUser = async (targetUserId, currentUserId) => {
   if (!mongoose.Types.ObjectId.isValid(targetUserId))
     throw new Error("invalid user id");

@@ -5,10 +5,10 @@ const generateToken = require("../utils/generateToken");
 const sendEmail = require("../utils/sendEmail");
 
 exports.registerUser = async (data, file) => {
-  const { username, email, password } = data;
+  const { username, email, password ,name} = data;
 
   const existingUsername = await User.findOne({ username });
-  if (existingUsername) throw new Error("Username or email already exists");
+  if (existingUsername) throw new Error("Username already used!");
 
   const existingEmail = await User.findOne({ email });
   if (existingEmail) throw new Error("email is already used!");
@@ -21,11 +21,13 @@ exports.registerUser = async (data, file) => {
     email,
     password: hashedPassword,
     profileImage,
+    name
   });
 
   return {
     user: {
       id: user._id,
+      name:user.name,
       username: user.username,
       role: user.role,
       profileImage: user.profileImage,
@@ -41,7 +43,7 @@ exports.loginUser = async ({ email, password }) => {
   if (!isMatch) throw new Error("invalid email or password.");
 
   return {
-    user: { id: user._id, username: user.username, role: user.role },
+    user: { id: user._id, username: user.username,name:user.name ,role: user.role },
     token: generateToken(user),
   };
 };

@@ -38,7 +38,7 @@ exports.getCommentsByPost = async (postId) => {
   if (!post) throw new Error("post not found");
 
   return await Comment.find({ post: postId })
-    .populate("author", "username")
+    .populate("author", "username name profileImage")
     .sort({ createdAt: -1 });
 };
 

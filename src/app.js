@@ -14,7 +14,7 @@ const { swaggerUi, swaggerSpec } = require('./swagger');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-app.use('/Uploads', express.static(path.join(__dirname, '/Uploads')));
+app.use('/Uploads', express.static(path.join(__dirname, '/../Uploads')));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin',adminRoutes);
