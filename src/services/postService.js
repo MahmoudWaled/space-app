@@ -23,7 +23,7 @@ exports.getAllPosts = async () => {
     .populate({
       path: "comments",
       options: { sort: { createdAt: -1 } },
-      populate: { path: "author", select: "username" },
+      populate: { path: "author", select: "username name profileImage" },
     })
     .sort({ createdAt: -1 });
 };
@@ -68,7 +68,7 @@ exports.updatePost = async (postId, data, file, user) => {
   const isAdmin = user.role === "admin";
   if (!isOwner && !isAdmin) throw new Error("not allowed action.");
 
-  const image = file ? `/Uploads/${file.filename}` : null;
+  const image = file ? `${file.filename}` : null;
   post.content = data.content || post.content;
   post.image = image || post.image;
   await post.save();

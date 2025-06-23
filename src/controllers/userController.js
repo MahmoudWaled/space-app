@@ -43,7 +43,7 @@ const updateUser = async (req, res) => {
     }
 
     if (req.file) {
-      updates.profileImage = `/uploads/${req.file.filename}`;
+      updates.profileImage = `${req.file.filename}`;
     }
 
      if (updates.password) {
