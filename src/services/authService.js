@@ -5,7 +5,7 @@ const generateToken = require("../utils/generateToken");
 const sendEmail = require("../utils/sendEmail");
 
 exports.registerUser = async (data, file) => {
-  const { username, email, password ,name} = data;
+  const { username, email, password, name } = data;
 
   const existingUsername = await User.findOne({ username });
   if (existingUsername) throw new Error("Username already used!");
@@ -21,13 +21,13 @@ exports.registerUser = async (data, file) => {
     email,
     password: hashedPassword,
     profileImage,
-    name
+    name,
   });
 
   return {
     user: {
       id: user._id,
-      name:user.name,
+      name: user.name,
       username: user.username,
       role: user.role,
       profileImage: user.profileImage,
@@ -37,13 +37,17 @@ exports.registerUser = async (data, file) => {
 };
 
 exports.loginUser = async ({ email, password }) => {
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+password");
   const isMatch = user && (await bcrypt.compare(password, user.password));
-
   if (!isMatch) throw new Error("invalid email or password.");
 
   return {
-    user: { id: user._id, username: user.username,name:user.name ,role: user.role },
+    user: {
+      id: user._id,
+      username: user.username,
+      name: user.name,
+      role: user.role,
+    },
     token: generateToken(user),
   };
 };

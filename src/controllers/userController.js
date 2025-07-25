@@ -32,13 +32,15 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-     if (req.fileValidationError) return res.status(400).json({ error: req.fileValidationError });
-    
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array().map(e => e.msg) });
+    if (req.fileValidationError)
+      return res.status(400).json({ error: req.fileValidationError });
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array().map((e) => e.msg) });
     const userId = req.params.id;
     const updates = req.body;
-     if ("role" in updates) {
+    if ("role" in updates) {
       delete updates.role;
     }
 
@@ -46,9 +48,14 @@ const updateUser = async (req, res) => {
       updates.profileImage = `${req.file.filename}`;
     }
 
-     if (updates.password) {
-      const salt = await bcrypt.genSalt(10);
-      updates.password = await bcrypt.hash(updates.password, salt);
+    if ("password" in updates) {
+      if (!updates.password || updates.password.trim() === "") {
+        delete updates.password;
+        delete updates.confirmPassword;
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        updates.password = await bcrypt.hash(updates.password, salt);
+      }
     }
     const updatedUser = await userService.updateUser(userId, updates);
 
@@ -87,5 +94,5 @@ module.exports = {
   deleteUser,
   followUser,
   unFollowUser,
-  updateUser
+  updateUser,
 };

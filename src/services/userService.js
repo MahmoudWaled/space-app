@@ -53,8 +53,7 @@ exports.followUser = async (targetUserId, currentUserId) => {
   if (!mongoose.Types.ObjectId.isValid(targetUserId))
     throw new Error("invalid user id");
 
-  if (targetUserId === currentUserId)
-    throw new Error("Cannot follow yourself");
+  if (targetUserId === currentUserId) throw new Error("Cannot follow yourself");
 
   const userToFollow = await User.findById(targetUserId);
   const currentUser = await User.findById(currentUserId);
@@ -92,7 +91,9 @@ exports.unFollowUser = async (targetUserId, currentUserId) => {
   if (!userToUnFollow) throw new Error("user not found");
 
   if (!userToUnFollow.followers.includes(currentUserId))
-    throw new Error(`you are not following this user: ${userToUnFollow.username}`);
+    throw new Error(
+      `you are not following this user: ${userToUnFollow.username}`
+    );
 
   userToUnFollow.followers = userToUnFollow.followers.filter(
     (id) => id.toString() !== currentUserId
